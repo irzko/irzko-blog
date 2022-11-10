@@ -4,9 +4,16 @@ import axios from "axios";
 import Post from "../components/community/post/post";
 import CreatePostNav from "../components/community/createpost/CreatePostNav";
 import Head from "next/head";
+export const NewsFeedContext = createContext();
+
+export const loadAllPosts = async () => {
+  let response = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/newsfeed`);
+  return response.data;
+};
 
 const Community = () => {
   const [newsfeed, setNewsFeed] = useState([]);
+
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_HOST}/newsfeed`).then((result) => {
       setNewsFeed(result.data);
@@ -14,12 +21,14 @@ const Community = () => {
   }, []);
 
   return (
-    <>
+    <NewsFeedContext.Provider
+      value={{ newsfeed: newsfeed, setNewsFeed: setNewsFeed }}
+    >
       <Head>
         <title>Công đồng</title>
       </Head>
       <div className="max-w-sm mx-auto">
-        <CreatePostNav />
+        <CreatePostNav post={newsfeed} setNewsFeed={setNewsFeed} />
         {newsfeed
           .slice(0)
           .reverse()
@@ -27,7 +36,7 @@ const Community = () => {
             <Post key={post._id} post={post} />
           ))}
       </div>
-    </>
+    </NewsFeedContext.Provider>
   );
 };
 

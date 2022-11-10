@@ -15,18 +15,24 @@ import {
   CornerUpRight,
   Edit2,
 } from "react-feather";
-// import { io } from "socket.io-client";
-
-// const socket = io("${process.env.NEXT_PUBLIC_HOST}");
+import { NewsFeedContext, loadAllPosts } from "../../../pages/community";
 
 const Dropdown = ({ post }) => {
   const { user } = useContext(Context);
+  const { newsfeed, setNewsFeed } = useContext(NewsFeedContext);
 
   const deletePost = () => {
-    axios.post(`${process.env.NEXT_PUBLIC_HOST}/newsfeed/delete`, {
-      _id: post._id,
-    });
+    axios
+      .post(`${process.env.NEXT_PUBLIC_HOST}/newsfeed/delete`, {
+        _id: post._id,
+      })
+      .then(() => {
+        loadAllPosts().then((res) => {
+          setNewsFeed(res);
+        });
+      });
   };
+  // console.log(newsfeed);
   return (
     <div className="absolute flex flex-col right-0 shadow-sm border bg-white rounded-2xl p-2 w-96 z-20">
       {user._id === post.author_id ? (

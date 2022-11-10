@@ -205,6 +205,63 @@ const EditEmail = ({ info, handleEditEmail }) => {
   );
 };
 
+const EditBirthday = ({ info, handleEditBirthday }) => {
+  const [day, setDay] = useState(info.day);
+  const [month, setMonth] = useState(info.month);
+  const [year, setYear] = useState(info.year);
+
+  const handleSubmit = () => {
+    // axios
+    //   .post(`${process.env.NEXT_PUBLIC_HOST}/users/update-email`, {
+    //     _id: info._id,
+    //     email: email,
+    //   })
+    //   .then(() => {
+    //     handleEditEmail();
+    //   });
+  };
+  return (
+    <div className="col-span-7">
+      <div className="flex flex-col lg:flex-row">
+        <div className="lg:w-1/2">
+          <input
+            className="focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md mb-3"
+            type="text"
+            placeholder="Ngày"
+            onChange={(e) => {
+              setDay(e.target.value);
+            }}
+            value={day}
+          ></input>
+          <input
+            className="col-span-3 focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md"
+            type="text"
+            placeholder="Tháng"
+            onChange={(e) => {
+              setMonth(e.target.value);
+            }}
+            value={month}
+          ></input>
+        </div>
+      </div>
+      <div className="flex mt-10">
+        <button
+          className="bg-[#FAEEE0] py-2 w-20 rounded-full mr-2 font-medium"
+          onClick={handleEditBirthday}
+        >
+          Đóng
+        </button>
+        <button
+          className="bg-[#F9CF93] py-2 w-20 rounded-full font-medium"
+          onClick={handleSubmit}
+        >
+          Lưu
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const InfoBasic = () => {
   const { user } = useContext(Context);
   const [usr, setUsr] = useState({});
@@ -221,6 +278,7 @@ const InfoBasic = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
+  const [editBirthday, setEditBirthday] = useState(false);
 
   const handleClick = () => {
     setIsDisabled(!isDisabled);
@@ -236,6 +294,10 @@ const InfoBasic = () => {
 
   const handleEditEmail = () => {
     setEditEmail(!editEmail);
+  };
+
+  const handleEditBirthday = () => {
+    setEditBirthday(!editBirthday);
   };
 
   return (
@@ -304,6 +366,23 @@ const InfoBasic = () => {
         )}
       </div>
       <hr />
+      <div className="py-3 grid grid-cols-12">
+        <span className="font-medium col-span-3 pl-3">Ngày sinh</span>
+        {!editBirthday ? (
+          <>
+            <span className="font-medium col-span-7">{`${usr.day} tháng ${usr.month}, ${usr.year}`}</span>
+            <button
+              onClick={handleEditBirthday}
+              className="text-blue-500 col-span-2 flex justify-end pr-3"
+            >
+              Chỉnh sửa
+            </button>
+          </>
+        ) : (
+          <EditBirthday info={usr} handleEditBirthday={handleEditBirthday} />
+        )}
+      </div>
+      <hr />
       {toggleAvatarChanger ? (
         <ChangeAvatar user={user} onClick={handleClickChangeAvt} />
       ) : (
@@ -320,13 +399,13 @@ export default function PersonalDetails() {
         <title>Cài đặt</title>
       </Head>
       <div>
-        <div className="fixed top-0 left-0 bg-white h-full w-80 pt-14 px-2 z-20 shadow-xl">
+        <div className="fixed cursor-pointer top-0 left-0 bg-white h-full w-80 pt-14 px-2 z-20 shadow-xl">
           <h2 className="text-2xl mt-2 font-bold">Cài đặt</h2>
           <div className="py-2 px-2 flex items-center rounded-lg font-medium hover:bg-whitesmoke">
             <Settings size={20} />
             <span className="ml-2">Chung</span>
           </div>
-          <div className="py-2 px-2 flex items-center rounded-lg font-medium hover:bg-whitesmoke">
+          <div className="py-2 px-2 cursor-pointer flex items-center rounded-lg font-medium hover:bg-whitesmoke">
             <Lock size={20} />
             <span className="ml-2">Bảo mật</span>
           </div>

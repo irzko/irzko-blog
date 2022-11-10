@@ -5,13 +5,16 @@ import { Context } from "../../../context/context";
 import { useContext } from "react";
 import { X } from "react-feather";
 import Image from "next/image";
+import { NewsFeedContext, loadAllPosts } from "../../../pages/community";
 
-const CreatePostForm = ({ onClick }) => {
+export const CreatePostForm = ({ onClick }) => {
+  const { newsfeed, setNewsFeed } = useContext(NewsFeedContext);
   const { user } = useContext(Context);
   const [caption, setCaption] = useState();
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState({});
   const [usr, setUsr] = useState({});
+
   useEffect(() => {
     if (user._id) {
       axios
@@ -49,6 +52,11 @@ const CreatePostForm = ({ onClick }) => {
           },
         }
       )
+      .then(() => {
+        loadAllPosts().then((res) => {
+          setNewsFeed(res);
+        });
+      })
       .catch((e) => {
         console.error(e);
       });

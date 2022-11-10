@@ -237,9 +237,17 @@ const RegisterForm = ({ setReg }) => {
 const RegisterSuccess = () => {
   const router = useRouter();
   return (
-    <div className="mt-6 w-64 h-64 flex flex-col justify-center items-center bg-white w-full border rounded-2xl">
+    <div className="mt-6 w-64 h-64 flex flex-col relative justify-center items-center bg-white w-full border rounded-2xl">
+      <div className="font-semibold absolute top-2">Thông báo</div>
       <span>Bạn đã đăng ký thành công</span>
-      <button className="bg-black text-white p-2 rounded-full mt-10" onClick={() => {router.push(`/login`)}}>Quay lại đăng nhập</button>
+      <button
+        className="bg-black absolute text-white px-4 py-2 rounded-full bottom-4"
+        onClick={() => {
+          router.push(`/login`);
+        }}
+      >
+        Quay lại đăng nhập
+      </button>
     </div>
   );
 };
@@ -255,13 +263,14 @@ export default function Signup() {
         <title>Đăng ký tài khoản</title>
       </Head>
       <div className="md:max-w-sm flex flex-col items-center mx-auto">
-        {isRegister ? <RegisterForm setReg={toggle} /> : 
-        <div className="fixed z-50 top-0 left-0 w-full h-full bg-black/50 backdrop-blur-lg flex justify-center items-center">
-          <RegisterSuccess />
-        </div>}
+        {isRegister ? (
+          <RegisterForm setReg={toggle} />
+        ) : (
+          <div className="fixed z-50 top-0 left-0 w-full h-full bg-black/50 backdrop-blur-lg flex justify-center items-center">
+            <RegisterSuccess />
+          </div>
+        )}
       </div>
-
-        
     </>
   );
 }

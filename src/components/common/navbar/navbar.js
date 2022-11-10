@@ -202,7 +202,7 @@ const OffCanvas = ({ nav, onClick }) => {
     <div className="relative">
       <div
         className={clsx(
-          "h-full right-0 fixed z-20 top-0 bg-titan-white rounded-l-2xl overflow-x-hidden pt-14",
+          "h-full right-0 fixed z-50 top-0 bg-white rounded-l-2xl overflow-x-hidden pt-14",
           nav ? "w-80" : "w-0"
         )}
       >
