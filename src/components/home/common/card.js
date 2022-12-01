@@ -12,7 +12,7 @@ const Card = ({ data, style }) => {
       onClick={handleClick}
       className={clsx(
         style,
-        "bg-ghostwhite hover:bg-linen rounded-3xl cursor-pointer flex flex-col justify-end box-border h-80"
+        "bg-whitesmoke hover:bg-linen rounded-3xl cursor-pointer flex flex-col justify-end box-border h-80"
       )}
     >
       <div className="relative h-80">

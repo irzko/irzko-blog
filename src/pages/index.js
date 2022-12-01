@@ -11,7 +11,6 @@ import axios from "axios";
 export default function Home() {
   const { user } = useContext(Context);
   const [usr, setUsr] = useState({});
-  console.log("SD");
   useEffect(() => {
     if (user && user._id) {
       axios

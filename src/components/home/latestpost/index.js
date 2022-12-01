@@ -8,7 +8,7 @@ export default function LatestPost() {
   const [latestPost, setLatestPost] = useState([]);
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_HOST}/blogs`).then((res) => {
-      setLatestPost(res.data);
+      setLatestPost(res.data.slice(0).reverse());
     });
   }, []);
   return (
@@ -28,13 +28,11 @@ export default function LatestPost() {
           style={"xl:col-span-2 sm:col-span-3 col-span-full"}
         />
         <Card
-          title="Hello"
-          description="The quick brown fox jumped over the lazy dog"
+          data={latestPost[3]}
           style={"xl:col-span-2 sm:col-span-3 col-span-full"}
         />
         <Card
-          title="Hello"
-          description="The quick brown fox jumped over the lazy dog"
+          data={latestPost[4]}
           style={"xl:col-span-2 sm:col-span-3 col-span-full"}
         />
       </div>

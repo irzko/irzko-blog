@@ -45,7 +45,7 @@ function Thumbnail({ src, index, click, isActive, name }) {
     >
       <div
         className={clsx(
-          "absolute bg- z-1 w-full h-full top-0 left-0 animate-wipe-right bg-linen",
+          "absolute bg- z-1 w-full h-full top-0 left-0 animate-wipe-right bg-[#F2E7D5]",
           isActive ? "block" : "hidden"
         )}
       ></div>
@@ -82,7 +82,7 @@ export default function Carousel() {
     setCurrentIndex(index);
   };
   const slide = () => {
-    if (currentIndex === posts.length - 1) {
+    if (currentIndex === 3) {
       setCurrentIndex(0);
     } else {
       setCurrentIndex(currentIndex + 1);
@@ -96,7 +96,7 @@ export default function Carousel() {
   return (
     <div className="flex lg:flex-row flex-col gap-3 mt-28">
       <div className="h-80 lg:h-[32rem] w-full lg:w-3/4 bg-ghostwhite rounded-3xl overflow-hidden">
-        {posts.map((post, index) => (
+        {posts.slice(0, 4).map((post, index) => (
           <Slides
             key={post._id}
             id={post._id}
@@ -108,7 +108,7 @@ export default function Carousel() {
         ))}
       </div>
       <div className="lg:w-1/4 flex lg:flex-col flex-row gap-3">
-        {posts.map((post, index) => (
+        {posts.slice(0, 4).map((post, index) => (
           <Thumbnail
             src={post.thumbnail}
             key={post._id}

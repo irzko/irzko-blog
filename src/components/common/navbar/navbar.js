@@ -14,11 +14,13 @@ import {
   UserPlus,
   Settings,
   Shield,
+  Bell,
 } from "react-feather";
 
 import { Context } from "../../../context/context";
+import Notification from "../../../pages/notification";
 
-const NavLink = ({ href, label, icon }) => {
+const NavLink = ({ href = "#", label, icon, onClick }) => {
   const router = useRouter();
   const [activeLinkStyle, setActiveLinkStyle] = useState();
   useEffect(() => {
@@ -29,7 +31,7 @@ const NavLink = ({ href, label, icon }) => {
     }
   }, [href, router.pathname]);
   return (
-    <li className="flex">
+    <li onClick={onClick} className="flex">
       <Link href={href}>
         <span
           className={clsx(
@@ -183,6 +185,10 @@ const DropDown = ({ icon, className }) => {
 
 const NavItem = ({ className }) => {
   const { user } = useContext(Context);
+  const [toggleNoti, setToggleNoti] = useState(false);
+  const openNoti = () => {
+    setToggleNoti(!toggleNoti);
+  };
   return (
     <ul className={className}>
       <NavLink href="/" label="Home" icon={<Home size={20} />} />
@@ -192,6 +198,8 @@ const NavItem = ({ className }) => {
         label="Cộng đồng"
         icon={<Radio className="animate-pulse" size={20} />}
       />
+      <NavLink onClick={openNoti} label="Thông báo" icon={<Bell size={20} />} />
+      <div className="relative">{toggleNoti ? <Notification /> : <></>}</div>
       <DropDown className="ml-1" icon={<User size={20} />} />
     </ul>
   );
@@ -218,6 +226,8 @@ const OffCanvas = ({ nav, onClick }) => {
 export default function Navbar() {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
+  const [valueSearch, setValueSearch] = useState("");
+  const router = useRouter();
   const handleClick = () => {
     setNav(!nav);
   };
@@ -228,6 +238,15 @@ export default function Navbar() {
 
   const handleBlur = () => {
     setSearch(!search);
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      router.push({
+        pathname: "/search/",
+        query: { q: e.target.value },
+      });
+    }
   };
   return (
     <>
@@ -248,6 +267,7 @@ export default function Navbar() {
                 )}
                 placeholder="Tìm kiếm"
                 onFocus={handleFocus}
+                onKeyDown={handleKeyDown}
                 onBlur={handleBlur}
               ></input>
             </div>

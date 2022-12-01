@@ -9,7 +9,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 export default function Profile() {
-  const [newsfeed, setNewsFeed] = useState([]);
+  const [posts, setPosts] = useState([]);
   const { user } = useContext(Context);
   const router = useRouter();
 
@@ -18,7 +18,7 @@ export default function Profile() {
       axios
         .get(`${process.env.NEXT_PUBLIC_HOST}/newsfeed/${user._id}`)
         .then((result) => {
-          setNewsFeed(result.data);
+          setPosts(result.data);
         });
     } else {
       router.push(`/login`);
@@ -31,9 +31,9 @@ export default function Profile() {
         <title>Trang cá nhân</title>
       </Head>
       <div className="md:px-0 2xl:max-w-2xl xl:max-w-xl lg:max-w-lg md:max-w-md sm:max-w-sm mx-auto">
-        <Intro user={user} />
+        <Intro user={user} amountPost={posts.length} />
         <div className="max-w-sm mx-auto">
-          {newsfeed.map((post) => (
+          {posts.map((post) => (
             <Post key={post._id} post={post} />
           ))}
         </div>

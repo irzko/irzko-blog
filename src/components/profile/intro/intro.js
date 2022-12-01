@@ -3,7 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import Image from "next/image";
 
-export default function Intro({ user }) {
+export default function Intro({ user, amountPost }) {
   const [editProfileBtn, setEditProfileBtn] = useState(false);
   const [usr, setUsr] = useState({});
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Intro({ user }) {
   }, [user._id]);
   return (
     <div
-      className="relative flex flex-col bg-ghostwhite rounded-2xl mt-14 h-80 justify-center items-center"
+      className="relative flex flex-col bg-whitesmoke rounded-2xl mt-14 h-80 justify-center items-center"
       onMouseOver={() => {
         setEditProfileBtn(true);
       }}
@@ -46,7 +46,7 @@ export default function Intro({ user }) {
       </div>
       <div className="text-2xl mt-5 font-semibold">{`${usr.firstName} ${usr.lastName}`}</div>
       <div className="mt-5 bg-white/50 backdrop-blur-lg p-2 rounded-full">
-        <span className="mr-5">Bài đăng: 0</span>
+        <span className="mr-5">Bài đăng: {amountPost}</span>
         <span className="mr-5">Lượt thích: 0</span>
         <span>Lượt theo dõi: 0</span>
       </div>

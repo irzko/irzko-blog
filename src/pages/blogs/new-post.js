@@ -148,7 +148,7 @@ export default function NewPost() {
       <Head>
         <title>Tạo blog mới</title>
       </Head>
-      <div className="max-w-md mx-auto pt-5 flex flex-col bg-white px-2 rounded-2xl">
+      <div className="max-w-md mx-auto mt-14 pt-5 flex flex-col bg-white px-2 rounded-2xl">
         <div className="mb-5">
           <input
             className="h-10 border px-2 w-full outline-none"

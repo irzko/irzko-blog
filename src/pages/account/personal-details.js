@@ -36,7 +36,7 @@ const ChangeAvatar = ({ onClick, user }) => {
       .catch((e) => {
         console.error(e);
       });
-    onClick();
+    window.location.reload();
   };
 
   return (
@@ -234,13 +234,22 @@ const EditBirthday = ({ info, handleEditBirthday }) => {
             value={day}
           ></input>
           <input
-            className="col-span-3 focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md"
+            className="col-span-3 focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md mb-3"
             type="text"
             placeholder="Tháng"
             onChange={(e) => {
               setMonth(e.target.value);
             }}
             value={month}
+          ></input>
+          <input
+            className="col-span-3 focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md"
+            type="text"
+            placeholder="Năm"
+            onChange={(e) => {
+              setYear(e.target.value);
+            }}
+            value={year}
           ></input>
         </div>
       </div>
@@ -392,7 +401,92 @@ const InfoBasic = () => {
   );
 };
 
+const EditPwd = ({ handleEditPwd }) => {
+  return (
+    <div className="col-span-7 mt-2 ml-2">
+      <div className="flex flex-col">
+        <div className="lg:w-1/2">
+          <input
+            className="focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md mb-3"
+            type="password"
+            placeholder="Mật khẩu hiện tại"
+          ></input>
+        </div>
+        <div className="lg:w-1/2">
+          <input
+            className="col-span-3 focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md mb-3"
+            type="password"
+            placeholder="Mật khẩu mới"
+          ></input>
+        </div>
+        <div className="lg:w-1/2">
+          <input
+            className="col-span-3 focus:outline-none h-10 w-full bg-whitesmoke px-2 rounded-md"
+            type="password"
+            placeholder="Nhập lại mật khẩu mới"
+          ></input>
+        </div>
+      </div>
+      <div className="flex mt-10">
+        <button
+          className="bg-[#FAEEE0] py-2 w-20 rounded-full mr-2 font-medium"
+          onClick={handleEditPwd}
+        >
+          Đóng
+        </button>
+        <button
+          className="bg-[#F9CF93] py-2 w-20 rounded-full font-medium"
+          // onClick={handleSubmit}
+        >
+          Lưu
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const Security = () => {
+  const [editPwd, setEditPwd] = useState(false);
+
+  const handleEditPwd = () => {
+    setEditPwd(!editPwd);
+  };
+  return (
+    <div className="mx-40 pt-2 h-full mb-64">
+      <h2 className="text-2xl font-medium">Bảo mật</h2>
+      <hr />
+      <div className="py-3 grid grid-cols-12">
+        <span className="font-medium col-span-10 pl-3">Mật khẩu</span>
+        {!editPwd ? (
+          <>
+            <button
+              onClick={handleEditPwd}
+              className="text-blue-500 col-span-2 flex justify-end pr-3"
+            >
+              Chỉnh sửa
+            </button>
+          </>
+        ) : (
+          <>
+            <EditPwd handleEditPwd={handleEditPwd} />
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default function PersonalDetails() {
+  const [layout, setLayout] = useState(0);
+
+  const renderSwitch = (layout) => {
+    switch (layout) {
+      case 0:
+        return <InfoBasic />;
+      case 1:
+        return <Security />;
+    }
+  };
   return (
     <>
       <Head>
@@ -401,17 +495,27 @@ export default function PersonalDetails() {
       <div>
         <div className="fixed cursor-pointer top-0 left-0 bg-white h-full w-80 pt-14 px-2 z-20 shadow-xl">
           <h2 className="text-2xl mt-2 font-bold">Cài đặt</h2>
-          <div className="py-2 px-2 flex items-center rounded-lg font-medium hover:bg-whitesmoke">
+          <div
+            className="py-2 px-2 flex items-center rounded-lg font-medium hover:bg-whitesmoke"
+            onClick={() => {
+              setLayout(0);
+            }}
+          >
             <Settings size={20} />
             <span className="ml-2">Chung</span>
           </div>
-          <div className="py-2 px-2 cursor-pointer flex items-center rounded-lg font-medium hover:bg-whitesmoke">
+          <div
+            className="py-2 px-2 cursor-pointer flex items-center rounded-lg font-medium hover:bg-whitesmoke"
+            onClick={() => {
+              setLayout(1);
+            }}
+          >
             <Lock size={20} />
             <span className="ml-2">Bảo mật</span>
           </div>
         </div>
         <div className="ml-80 py-10 mt-14 bg-white">
-          <InfoBasic />
+          {renderSwitch(layout)}
           <Footer />
         </div>
       </div>

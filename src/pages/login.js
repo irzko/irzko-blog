@@ -7,9 +7,15 @@ import { useRouter } from "next/router";
 import { Context } from "../context/context";
 import { useContext } from "react";
 import axios from "axios";
+import clsx from "clsx";
+
+const Warning = ({ warn, className }) => {
+  return <div className={clsx("text-red-600", className)}>{warn}</div>;
+};
 
 export default function Login() {
   const router = useRouter();
+  const [loginFailure, setLoginFailure] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -24,11 +30,15 @@ export default function Login() {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/auth`, user);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_HOST}/auth`,
+        user
+      );
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       router.push("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });
+      setLoginFailure(true);
     }
   };
 
@@ -41,6 +51,7 @@ export default function Login() {
       <div className="md:max-w-sm flex flex-col items-center mx-auto">
         <div className="mt-6 w-full rounded-2xl bg-white shadow-2xl">
           <div className="p-3 text-center font-bold">Đăng nhập</div>
+
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-6 w-full gap-4 border-t px-3 py-5"
@@ -61,6 +72,14 @@ export default function Login() {
               onChange={changeInputValue}
               value={user.password}
             />
+            {loginFailure ? (
+              <Warning
+                warn="Thông tin đăng nhập không hợp lệ"
+                className="col-span-full"
+              ></Warning>
+            ) : (
+              <></>
+            )}
             <button
               className="col-span-full bg-black text-white font-medium h-12 rounded-md"
               type="submit"
