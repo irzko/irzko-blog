@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import supersub from "remark-supersub";
+import remarkComment from "remark-comment";
 import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
@@ -255,6 +256,7 @@ export default async function Page({
         [remarkIns],
         [remarkFlexibleMarkers],
         [remarkFlexibleContainers],
+        [remarkComment],
       ],
     },
     // parseFrontmatter: true,
@@ -295,7 +297,9 @@ export default async function Page({
             ))}
           </BreadcrumbRoot>
           <Stack paddingX="1rem">
-            <Heading as="h1" size="4xl">{post.title || "(No title)"}</Heading>
+            <Heading as="h1" size="4xl">
+              {post.title || "(No title)"}
+            </Heading>
             <p>
               {new Date(post.createdAt).toLocaleDateString("vi-VN", {
                 day: "2-digit",
