@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { Card, Flex, Grid, Text, Heading, Container } from "@chakra-ui/react";
+import { Flex, Grid, Text, Heading, Container, Box } from "@chakra-ui/react";
 import { unstable_cache } from "next/cache";
 import NextImage from "next/image";
 import NextLink from "next/link";
@@ -38,6 +38,7 @@ export default async function Home() {
   return (
     <Container maxW="5xl" padding="1rem">
       <Grid
+        divideY="1px"
         templateColumns={[
           "repeat(1, 1fr)",
           "repeat(2, 1fr)",
@@ -47,42 +48,39 @@ export default async function Home() {
         gap="1rem"
       >
         {allPosts.slice(0, 4).map((post) => (
-          <NextLink
+          <Box
             key={post.id}
-            href={`/${slugify(post.title, {
-              replacement: "-",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            })}-${post.id}.html`}
+            paddingTop={{
+              base: "1rem",
+              sm: "0",
+            }}
           >
-            <Card.Root
-              height="100%"
-              border="none"
-              overflow="hidden"
-              cursor="pointer"
+            <NextLink
+              href={`/${slugify(post.title, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+                trim: true,
+              })}-${post.id}.html`}
             >
-              <Card.Header padding={0}>
-                <Flex position="relative" aspectRatio={16 / 9}>
-                  <Image asChild alt={post.title} rounded="xl">
-                    <NextImage
-                      src={post.featuredImageURL || "/no-image.jpg"}
-                      alt={post.title}
-                      fill
-                      unoptimized
-                    />
-                  </Image>
-                </Flex>
-              </Card.Header>
-              <Card.Body padding="1rem">
+              <Flex position="relative" aspectRatio={16 / 9}>
+                <Image asChild alt={post.title} rounded="xl">
+                  <NextImage
+                    src={post.featuredImageURL || "/no-image.jpg"}
+                    alt={post.title}
+                    fill
+                    unoptimized
+                  />
+                </Image>
+              </Flex>
+              <Box spaceY={"0.5rem"}>
                 <Heading size="xl">{post.title}</Heading>
                 <Text lineClamp={2}>{post.description}</Text>
-              </Card.Body>
-              <Card.Footer></Card.Footer>
-            </Card.Root>
-          </NextLink>
+              </Box>
+            </NextLink>
+          </Box>
         ))}
       </Grid>
     </Container>

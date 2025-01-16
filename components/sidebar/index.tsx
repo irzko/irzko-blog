@@ -25,7 +25,7 @@ const SideBar = () => {
       </DrawerTrigger>
       <DrawerContent roundedLeft="2xl">
         <DrawerHeader>
-          <DrawerTitle>Drawer Title</DrawerTitle>
+          <DrawerTitle>Menu</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
           <p>
