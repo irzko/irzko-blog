@@ -43,7 +43,13 @@ export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
   ColorModeButtonProps
 >(function ColorModeButton(props, ref) {
+  // const [mounted, setMounted] = React.useState(false);
   const { toggleColorMode } = useColorMode();
+  // React.useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+
+  // if (!mounted) return null;
   return (
     <ClientOnly fallback={<Skeleton rounded="full" boxSize="8" />}>
       <IconButton
