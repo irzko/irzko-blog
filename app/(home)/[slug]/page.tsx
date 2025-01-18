@@ -276,7 +276,7 @@ export default async function Page({
           md: "row",
         }}
         maxWidth="1024px"
-        width="100%"
+        w="full"
       >
         <Flex direction="column" gap="1rem">
           <BreadcrumbRoot
@@ -321,7 +321,7 @@ export default async function Page({
         <Stack
           bgColor={"gray.100"}
           width={{
-            base: "100%",
+            base: "full",
             md: "32rem",
           }}
         >

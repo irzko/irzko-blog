@@ -34,7 +34,7 @@ export default function Layout({
         <Flex
           paddingX="1rem"
           justifyContent="space-between"
-          width="100%"
+          width="full"
           height="4rem"
           gap="1rem"
           maxWidth="1024px"
