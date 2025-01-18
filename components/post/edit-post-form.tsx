@@ -14,9 +14,11 @@ import {
   Category,
 } from "@prisma/client";
 import LexicalEditor from "@/components/lexical";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
+
 import SelectCategoryModal from "./select-category-modal";
+import { Box, Card, Flex, Input, Text } from "@chakra-ui/react";
+import { Field } from "../ui/field";
+import { Button } from "../ui/button";
 
 function sortCategories(categories: Category[]) {
   const result: string[] = [];
@@ -59,60 +61,102 @@ export default function EditPostForm({
   }, []);
 
   return (
-    <form
-      className="gap-6 flex flex-col"
-      action={(formData) => {
-        formData.append("content", content);
-        formData.append("id", post.id);
-        formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
-        updatePost(formData);
+    <Flex
+      direction={{
+        md: "row",
+        base: "column",
       }}
+      asChild
+      justifyContent="center"
+      w="full"
+      maxWidth="1024px"
+      padding="1rem"
+      gap="1rem"
     >
-      <Input
-        id="title"
-        name="title"
-        placeholder="Tiêu đề"
-        defaultValue={post.title}
-        required
-        autoComplete="false"
-      />
+      <form
+        action={(formData) => {
+          formData.append("content", content);
+          formData.append("id", post.id);
+          formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
+          updatePost(formData);
+        }}
+      >
+        <Box w="full" spaceY="1rem">
+          <Field label="Tiêu đề" required>
+            <Input
+              rounded="lg"
+              id="title"
+              name="title"
+              defaultValue={post.title}
+              placeholder="Nhập tiêu đề"
+              autoComplete="off"
+            />
+          </Field>
+          <div>
+            <Text marginBottom="0.5rem" fontSize="0.875rem">
+              Nội dung
+            </Text>
+            <LexicalEditor onChange={handleChange} />
+          </div>
+        </Box>
+        <Box
+          w={{
+            md: "24rem",
+            base: "full",
+          }}
+          className="md:w-96 w-full space-y-4"
+        >
+          <Card.Root shadow="none">
+            <Card.Body padding="1rem" spaceY="1rem">
+              <div>
+                <p className="text-sm mb-2">Danh mục</p>
+                <SelectCategoryModal
+                  categories={categories}
+                  selectedCategoryIds={selectedCategoryIds}
+                  setSelectedCategoryIds={setSelectedCategoryIds}
+                />
+              </div>
+              <Field label="URL hình ảnh" required>
+                <Input
+                  rounded="lg"
+                  defaultValue={post.featuredImageURL}
+                  id="featuredImageURL"
+                  name="featuredImageURL"
+                  placeholder="Nhập URL hình ảnh tiêu biểu"
+                  autoComplete="off"
+                />
+              </Field>
 
-      <LexicalEditor onChange={handleChange} markdown={post.content} />
-      <div className="space-y-4">
-        <h2>Danh mục</h2>
-        <SelectCategoryModal
-          categories={categories}
-          selectedCategoryIds={selectedCategoryIds}
-          setSelectedCategoryIds={setSelectedCategoryIds}
-        />
-      </div>
-      <Input
-        autoComplete="false"
-        id="featuredImageURL"
-        name="featuredImageURL"
-        placeholder="Featured image URL"
-        defaultValue={post.featuredImageURL}
-        required
-      />
-      <Input
-        autoComplete="false"
-        id="description"
-        name="description"
-        placeholder="Nhập mô tả"
-        defaultValue={post.description}
-        required
-      />
-      <Input
-        autoComplete="false"
-        id="tagNames"
-        name="tagNames"
-        placeholder="Thẻ bài viết"
-        required
-        defaultValue={post.tags.map((i) => i.tag.name).join(", ")}
-      />
-      <Button className="w-full" type="submit">
-        Lưu
-      </Button>
-    </form>
+              <Field label="Mô tả" required>
+                <Input
+                  rounded="lg"
+                  id="description"
+                  name="description"
+                  defaultValue={post.description}
+                  placeholder="Nhập mô tả"
+                  autoComplete="off"
+                />
+              </Field>
+
+              <Field label="Thẻ bài viết" required>
+                <Input
+                  rounded="lg"
+                  id="tags"
+                  name="tagNames"
+                  placeholder="Nhập thẻ bài viết"
+                  defaultValue={post.tags.map((i) => i.tag.name).join(", ")}
+                  autoComplete="off"
+                />
+              </Field>
+            </Card.Body>
+            <Card.Footer padding="1rem">
+              <Button w="full" rounded="lg" variant="solid" color="primary">
+                Đăng
+              </Button>
+            </Card.Footer>
+          </Card.Root>
+        </Box>
+      </form>
+    </Flex>
   );
 }
