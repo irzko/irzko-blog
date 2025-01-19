@@ -39,7 +39,7 @@ export default async function Home() {
     <Container maxW="5xl" padding="1rem">
       <Grid
         divideY={{
-          base: "1rem",
+          base: "1px",
           sm: "0",
         }}
         templateColumns={[

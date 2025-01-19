@@ -18,7 +18,7 @@ import {
 import { Suspense } from "react";
 import slugify from "slugify";
 import { Metadata } from "next";
-import { Em, Flex, Heading, Stack, VStack } from "@chakra-ui/react";
+import { Em, Flex, Heading, Stack, VStack, Text } from "@chakra-ui/react";
 import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
 import { Blockquote } from "@/components/ui/blockquote";
 
@@ -136,10 +136,18 @@ const components: MDXComponents = {
     );
   },
   strong({ children }) {
-    return <strong className="font-bold">{children}</strong>;
+    return (
+      <Text as="strong" fontWeight="bold">
+        {children}
+      </Text>
+    );
   },
   u({ children }) {
-    return <u className="underline">{children}</u>;
+    return (
+      <Text as="u" textDecoration="underline">
+        {children}
+      </Text>
+    );
   },
   em({ children }) {
     return <Em>{children}</Em>;

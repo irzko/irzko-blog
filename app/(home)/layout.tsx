@@ -5,6 +5,7 @@ import { Silkscreen } from "next/font/google";
 import { InputGroup } from "@/components/ui/input-group";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import SideBar from "@/components/sidebar";
+import AvatarMenu from "@/components/avatar-menu";
 
 const silkscreen = Silkscreen({
   weight: ["400"],
@@ -86,6 +87,7 @@ export default function Layout({
               />
             </InputGroup>
             <ColorModeButton />
+            <AvatarMenu />
             <SideBar />
           </Flex>
         </Flex>

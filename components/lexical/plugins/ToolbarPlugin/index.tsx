@@ -82,7 +82,7 @@ import {
   MenuTrigger,
 } from "@/components/ui/menu";
 import { Button } from "@/components/ui/button";
-import { Box, Flex, IconButton } from "@chakra-ui/react";
+import { Flex, IconButton, Separator } from "@chakra-ui/react";
 
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
@@ -704,8 +704,8 @@ export default function ToolbarPlugin({
         $isElementNode(matchingParent)
           ? matchingParent.getFormatType()
           : $isElementNode(node)
-          ? node.getFormatType()
-          : parent?.getFormatType() || "left"
+            ? node.getFormatType()
+            : parent?.getFormatType() || "left"
       );
     }
 
@@ -926,7 +926,7 @@ export default function ToolbarPlugin({
             />
           </>
         )}
-      <Box h="1.25rem" w="1px" />
+      <Separator orientation="vertical" height="5" />
 
       {toolbarState.blockType === "code" ? (
         <MenuRoot>
@@ -1092,7 +1092,7 @@ export default function ToolbarPlugin({
             </svg>
           </IconButton>
           <InsertTableDialog activeEditor={activeEditor} />
-          <Box h="1.25rem" w="1px" />
+          <Separator orientation="vertical" height="5" />
 
           <MenuRoot>
             <MenuTrigger disabled={!isEditable} asChild>
