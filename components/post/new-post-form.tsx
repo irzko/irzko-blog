@@ -14,7 +14,7 @@ import { Box, Card, Flex, Input, Text } from "@chakra-ui/react";
 import { Field } from "../ui/field";
 import { Button } from "../ui/button";
 
-export default function CreatePostForm({
+export default function NewPostForm({
   authorId,
   categories,
 }: {
@@ -42,7 +42,6 @@ export default function CreatePostForm({
         justifyContent="center"
         w="full"
         maxWidth="1024px"
-        padding="1rem"
         gap="1rem"
       >
         <form

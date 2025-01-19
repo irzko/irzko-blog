@@ -16,7 +16,7 @@ export default async function AvatarMenu() {
     <>
       {session ? (
         <MenuRoot>
-          <MenuTrigger asChild>
+          <MenuTrigger display={{ base: "none", md: "block" }} asChild>
             <IconButton variant="subtle" rounded="full">
               <Avatar name={session?.user?.name || session.user?.username} />
             </IconButton>

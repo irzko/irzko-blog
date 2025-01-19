@@ -1,4 +1,4 @@
-import CreatePostForm from "@/components/post/create-post-form";
+import NewPostForm from "@/components/post/new-post-form";
 import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
@@ -25,7 +25,7 @@ export default async function Page() {
 
   return (
     <Container maxW="5xl" padding="1rem">
-      <CreatePostForm
+      <NewPostForm
         authorId={session.user.id as string}
         categories={categories}
       />
