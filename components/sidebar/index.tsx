@@ -3,7 +3,7 @@ import {
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
-  DrawerFooter,
+  // DrawerFooter,
   DrawerHeader,
   DrawerRoot,
   DrawerTitle,
@@ -17,7 +17,7 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import { findChildCategories } from "@/lib/findChildCategories";
 import { Category } from "@prisma/client";
-import UserItem from "./user-item";
+// import UserItem from "./user-item";
 // import UserItem from "./user-item";
 
 const getCategories = unstable_cache(
@@ -87,9 +87,9 @@ const SideBar = async () => {
             ))}
           </Grid>
         </DrawerBody>
-        <DrawerFooter>
+        {/* <DrawerFooter>
           <UserItem />
-        </DrawerFooter>
+        </DrawerFooter> */}
       </DrawerContent>
     </DrawerRoot>
   );
