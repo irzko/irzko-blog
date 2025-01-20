@@ -3,6 +3,7 @@ import {
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerRoot,
   DrawerTitle,
@@ -17,6 +18,7 @@ import prisma from "@/lib/prisma";
 import { findChildCategories } from "@/lib/findChildCategories";
 import { Category } from "@prisma/client";
 import UserItem from "./user-item";
+// import UserItem from "./user-item";
 
 const getCategories = unstable_cache(
   async () => {
@@ -64,6 +66,7 @@ const SideBar = async () => {
         </IconButton>
       </DrawerTrigger>
       <DrawerContent roundedLeft="2xl">
+        <DrawerCloseTrigger />
         <DrawerHeader>
           <DrawerTitle>Menu</DrawerTitle>
         </DrawerHeader>
@@ -71,13 +74,7 @@ const SideBar = async () => {
           <Grid templateColumns={"repeat(2, 1fr)"} gap="1rem">
             {categories.map((category) => (
               <Box key={category.id}>
-                <Link
-                  w="full"
-                  fontWeight="bold"
-                  // focusRing="none"
-                  colorPalette="teal"
-                  asChild
-                >
+                <Link w="full" fontWeight="bold" colorPalette="teal" asChild>
                   <NextLink href={`/category/${category.slug}`}>
                     {category.name}
                   </NextLink>
@@ -90,8 +87,9 @@ const SideBar = async () => {
             ))}
           </Grid>
         </DrawerBody>
-        <UserItem />
-        <DrawerCloseTrigger />
+        <DrawerFooter>
+          <UserItem />
+        </DrawerFooter>
       </DrawerContent>
     </DrawerRoot>
   );
