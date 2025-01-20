@@ -1,3 +1,4 @@
+"use client";
 import {
   MenuContent,
   MenuItem,
@@ -6,12 +7,13 @@ import {
 } from "@/components/ui/menu";
 import { Avatar } from "./ui/avatar";
 import { IconButton } from "@chakra-ui/react";
-import { auth, signOut } from "@/auth";
+import { signOut } from "@/auth";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-export default async function AvatarMenu() {
-  const session = await auth();
+export default function AvatarMenu() {
+  const { data: session } = useSession();
   return (
     <>
       {session ? (
