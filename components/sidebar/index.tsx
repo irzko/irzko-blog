@@ -1,11 +1,11 @@
-import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
+// import { auth } from "@/auth";
+// import { Button } from "@/components/ui/button";
 import {
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
-  DrawerFooter,
+  // DrawerFooter,
   DrawerHeader,
   DrawerRoot,
   DrawerTitle,
@@ -14,7 +14,7 @@ import {
 import { Box, Grid, IconButton, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuMenu } from "react-icons/lu";
-import { Avatar } from "../ui/avatar";
+// import { Avatar } from "../ui/avatar";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import { findChildCategories } from "@/lib/findChildCategories";
@@ -56,7 +56,7 @@ const ChildCategories = ({
 };
 
 const SideBar = async () => {
-  const session = await auth();
+  // const session = await auth();
   const categories = await getCategories();
   return (
     <DrawerRoot>
@@ -93,7 +93,7 @@ const SideBar = async () => {
             ))}
           </Grid>
         </DrawerBody>
-        <DrawerFooter>
+        {/* <DrawerFooter>
           {session ? (
             <Button
               rounded="lg"
@@ -114,7 +114,7 @@ const SideBar = async () => {
               <NextLink href="/auth/sign-in">Sign in</NextLink>
             </Button>
           )}
-        </DrawerFooter>
+        </DrawerFooter> */}
         <DrawerCloseTrigger />
       </DrawerContent>
     </DrawerRoot>
