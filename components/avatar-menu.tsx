@@ -28,17 +28,10 @@ export default async function AvatarMenu() {
                 {session?.user?.name || session.user?.username}
               </Link>
             </MenuItem>
-            <MenuItem value="sign-out" asChild>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut();
-                }}
-              >
-                <Button type="submit" w="full" variant="ghost" color="red">
-                  Sign out
-                </Button>
-              </form>
+            <MenuItem value="sign-out" asChild>            
+              <Button w="full" variant="ghost" onClick={() => signOut()} color="red">
+                Đăng xuất
+              </Button>
             </MenuItem>
           </MenuContent>
         </MenuRoot>
