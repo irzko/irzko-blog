@@ -11,22 +11,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Grid, IconButton, Link } from "@chakra-ui/react";
+import { Box, Grid, IconButton, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuMenu } from "react-icons/lu";
 import { Avatar } from "../ui/avatar";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
+import { findChildCategories } from "@/lib/findChildCategories";
+import { Category } from "@prisma/client";
 
 const getCategories = unstable_cache(
   async () => {
     return await prisma.category.findMany({
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-      },
-
       orderBy: [
         {
           createdAt: "desc",
@@ -37,6 +33,27 @@ const getCategories = unstable_cache(
   ["categories"],
   { tags: ["categories"] }
 );
+
+const ChildCategories = ({
+  categories,
+  parentId,
+}: {
+  categories: Category[];
+  parentId: string;
+}) => {
+  const childCategories = findChildCategories(categories, parentId);
+  return (
+    <>
+      {childCategories.map((category) => (
+        <Link key={category.id} w="full" asChild>
+          <NextLink href={`/category/${category.slug}`}>
+            {category.name}
+          </NextLink>
+        </Link>
+      ))}
+    </>
+  );
+};
 
 const SideBar = async () => {
   const session = await auth();
@@ -53,14 +70,26 @@ const SideBar = async () => {
         <DrawerHeader>
           <DrawerTitle>Menu</DrawerTitle>
         </DrawerHeader>
-        <DrawerBody>
-          <Grid templateColumns={"repeat(2, 1fr)"}>
+        <DrawerBody autoFocus={false}>
+          <Grid templateColumns={"repeat(2, 1fr)"} gap="1rem">
             {categories.map((category) => (
-              <Link key={category.id} w="full" colorPalette="teal" asChild>
-                <NextLink href={`/category/${category.slug}`}>
-                  {category.name}
-                </NextLink>
-              </Link>
+              <Box key={category.id}>
+                <Link
+                  w="full"
+                  fontWeight="bold"
+                  // focusRing="none"
+                  colorPalette="teal"
+                  asChild
+                >
+                  <NextLink href={`/category/${category.slug}`}>
+                    {category.name}
+                  </NextLink>
+                </Link>
+                <ChildCategories
+                  categories={categories}
+                  parentId={category.id}
+                />
+              </Box>
             ))}
           </Grid>
         </DrawerBody>
