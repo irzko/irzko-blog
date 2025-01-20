@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/menu";
 import { Avatar } from "./ui/avatar";
 import { IconButton } from "@chakra-ui/react";
-import { signOut } from "@/auth";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
