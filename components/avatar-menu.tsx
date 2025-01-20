@@ -10,7 +10,7 @@ import { IconButton } from "@chakra-ui/react";
 import { signOut } from "@/auth";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 export default function AvatarMenu() {
   const { data: session } = useSession();
@@ -30,17 +30,10 @@ export default function AvatarMenu() {
                 {session?.user?.name || session.user?.username}
               </Link>
             </MenuItem>
-            <MenuItem value="sign-out" asChild>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut();
-                }}
-              >
-                <Button type="submit" w="full" variant="ghost" color="red">
-                  Sign out
-                </Button>
-              </form>
+            <MenuItem value="sign-out" asChild>            
+              <Button w="full" variant="ghost" onClick={() => signIn()} color="red">
+                Đăng xuất
+              </Button>
             </MenuItem>
           </MenuContent>
         </MenuRoot>
