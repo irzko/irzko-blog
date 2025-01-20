@@ -1,12 +1,11 @@
-"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import NextLink from "next/link";
 import { Avatar } from "../ui/avatar";
-import { useSession } from "next-auth/react";
+import { auth } from "@/auth";
 
-export default function UserItem() {
-  const { data: session } = useSession();
+export default async function UserItem() {
+  const session = await auth();
   return (
     <>
       {session ? (
