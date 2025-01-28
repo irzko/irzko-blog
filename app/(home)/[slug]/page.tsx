@@ -16,7 +16,6 @@ import {
   type MDXRemoteOptions,
 } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
-import slugify from "slugify";
 import { Metadata } from "next";
 import { Em, Flex, Heading, Stack, VStack, Text } from "@chakra-ui/react";
 import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
@@ -47,26 +46,7 @@ const getPost = unstable_cache(
 );
 
 export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    select: {
-      id: true,
-      title: true,
-    },
-  });
-  return posts.map((post) => ({
-    slug:
-      slugify(post.title, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }) +
-      "-" +
-      post.id +
-      ".html",
-  }));
+  return [];
 }
 
 type Props = {
@@ -327,14 +307,11 @@ export default async function Page({
           </Stack>
         </Flex>
         <Stack
-          bgColor={"gray.100"}
           width={{
             base: "full",
             md: "32rem",
           }}
-        >
-          fe
-        </Stack>
+        ></Stack>
       </Flex>
     </VStack>
   );
